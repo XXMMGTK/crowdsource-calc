@@ -1,0 +1,185 @@
+/* ===== iOS 基础变量 ===== */
+:root {
+  /* 系统色 */
+  --color-bg: #F2F2F7;
+  --color-card: #FFFFFF;
+  --color-separator: rgba(60, 60, 67, 0.12);
+
+  /* 文字 */
+  --color-text-primary: #1C1C1E;
+  --color-text-secondary: #8E8E93;
+  --color-text-placeholder: #C7C7CC;
+
+  /* 评级色 - iOS 原生色值 */
+  --color-good: #34C759;
+  --color-normal: #FF9500;
+  --color-bad: #FF3B30;
+
+  /* 圆角 */
+  --radius-card: 16px;
+  --radius-input: 12px;
+  --radius-btn: 12px;
+
+  /* 安全区 */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+
+  /* 字号 */
+  --font-title: 28px;
+  --font-metric: 36px;
+  --font-body: 15px;
+  --font-caption: 13px;
+}
+
+/* ===== 全局重置 ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+  font-size: var(--font-body);
+  color: var(--color-text-primary);
+  background: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#app {
+  height: 100%;
+  max-width: 428px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ===== 输入框 ===== */
+.input-field {
+  width: 100%;
+  height: 48px;
+  padding: 0 14px;
+  font-size: 16px;
+  font-family: inherit;
+  color: var(--color-text-primary);
+  background: var(--color-card);
+  border: 1px solid var(--color-separator);
+  border-radius: var(--radius-input);
+  outline: none;
+  -webkit-appearance: none;
+  transition: border-color 0.15s ease;
+}
+
+.input-field:focus {
+  border-color: #007AFF;
+}
+
+.input-field::placeholder {
+  color: var(--color-text-placeholder);
+}
+
+/* ===== 按钮 ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  padding: 0 24px;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: inherit;
+  border: none;
+  border-radius: var(--radius-btn);
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.btn:active {
+  opacity: 0.7;
+}
+
+.btn-primary {
+  background: #007AFF;
+  color: #FFFFFF;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: #007AFF;
+}
+
+/* ===== 卡片 ===== */
+.card {
+  background: var(--color-card);
+  border-radius: var(--radius-card);
+  padding: 16px 20px;
+}
+
+/* ===== 标签 ===== */
+.label {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+  margin-bottom: 6px;
+  display: block;
+}
+
+/* ===== 结果值 ===== */
+.result-value {
+  font-size: var(--font-metric);
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  line-height: 1.1;
+}
+
+/* ===== 评级标签 ===== */
+.rating-tag {
+  display: inline-block;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 4px 0;
+}
+
+/* ===== 页面容器 ===== */
+.page {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 20px;
+  padding-bottom: calc(16px + var(--safe-bottom));
+  -webkit-overflow-scrolling: touch;
+}
+
+.page-header {
+  padding-top: calc(16px + var(--safe-top));
+  padding-bottom: 12px;
+}
+
+.page-title {
+  font-size: var(--font-title);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  letter-spacing: 0.3px;
+}
+
+/* ===== 输入组 ===== */
+.input-group {
+  margin-bottom: 16px;
+}
+
+/* ===== 底部按钮区 ===== */
+.page-footer {
+  padding: 12px 20px;
+  padding-bottom: calc(12px + var(--safe-bottom));
+  background: var(--color-bg);
+}
