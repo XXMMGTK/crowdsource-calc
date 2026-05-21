@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/crowdsource-calc/sw.js', { scope: '/crowdsource-calc/' })})}
