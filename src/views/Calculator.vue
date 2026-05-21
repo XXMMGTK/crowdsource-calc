@@ -4,7 +4,7 @@
       <h1 class="page-title">众包性价比计算器</h1>
     </div>
 
-    <CalculatorForm v-model="input" />
+    <CalculatorForm :input="form" @update:price="form.price = $event" @update:dist-to-shop="form.distToShop = $event" @update:dist-to-customer="form.distToCustomer = $event" />
 
     <ResultCard v-if="showResult" :result="result!" />
 
@@ -17,20 +17,28 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { reactive, ref, computed } from 'vue'
 import type { CalcInput, CalcResult } from '@/types'
 import { calculate } from '@/utils/calculator'
 import { saveRecord, generateId } from '@/utils/storage'
-import CalculatorForm from '@/components/CalculatorForm.vue'
+import CalculatorForm, { type FormInput } from '@/components/CalculatorForm.vue'
 import ResultCard from '@/components/ResultCard.vue'
 
-const input = ref<CalcInput>({ price: 0, distToShop: 0, distToCustomer: 0 })
+const form = reactive<FormInput>({ price: '', distToShop: '', distToCustomer: '' })
 const savedTip = ref(false)
 
+function toCalcInput(f: FormInput): CalcInput {
+  return {
+    price: parseFloat(f.price) || 0,
+    distToShop: parseFloat(f.distToShop) || 0,
+    distToCustomer: parseFloat(f.distToCustomer) || 0
+  }
+}
+
 const result = computed<CalcResult | null>(() => {
-  const { price, distToShop, distToCustomer } = input.value
-  if (!price || !distToShop || !distToCustomer) return null
-  return calculate(input.value)
+  const input = toCalcInput(form)
+  if (!input.price || !input.distToShop || !input.distToCustomer) return null
+  return calculate(input)
 })
 
 const showResult = computed(() => result.value !== null)
@@ -39,7 +47,7 @@ function onSave() {
   if (!result.value) return
   saveRecord({
     id: generateId(),
-    input: { ...input.value },
+    input: toCalcInput(form),
     result: result.value,
     createdAt: new Date().toISOString()
   })

@@ -7,8 +7,8 @@
         type="text"
         inputmode="decimal"
         placeholder="请输入订单总价"
-        :value="modelValue.price === 0 ? '' : modelValue.price"
-        @input="onPriceInput"
+        :value="input.price"
+        @input="emit('update:price', ($event.target as HTMLInputElement).value)"
       />
     </div>
     <div class="input-group">
@@ -18,8 +18,8 @@
         type="text"
         inputmode="decimal"
         placeholder="请输入距离"
-        :value="modelValue.distToShop === 0 ? '' : modelValue.distToShop"
-        @input="onDistShopInput"
+        :value="input.distToShop"
+        @input="emit('update:distToShop', ($event.target as HTMLInputElement).value)"
       />
     </div>
     <div class="input-group">
@@ -29,47 +29,27 @@
         type="text"
         inputmode="decimal"
         placeholder="请输入距离"
-        :value="modelValue.distToCustomer === 0 ? '' : modelValue.distToCustomer"
-        @input="onDistCustomerInput"
+        :value="input.distToCustomer"
+        @input="emit('update:distToCustomer', ($event.target as HTMLInputElement).value)"
       />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { CalcInput } from '@/types'
+export interface FormInput {
+  price: string
+  distToShop: string
+  distToCustomer: string
+}
 
-const props = defineProps<{
-  modelValue: CalcInput
+defineProps<{
+  input: FormInput
 }>()
 
 const emit = defineEmits<{
-  'update:modelValue': [value: CalcInput]
+  'update:price': [value: string]
+  'update:distToShop': [value: string]
+  'update:distToCustomer': [value: string]
 }>()
-
-function parseNum(val: string): number {
-  const cleaned = val.replace(/[^0-9.]/g, '')
-  const parts = cleaned.split('.')
-  if (parts.length > 2) return NaN
-  const num = Number(cleaned)
-  return isNaN(num) ? NaN : num
-}
-
-function onPriceInput(e: Event) {
-  const val = (e.target as HTMLInputElement).value
-  const num = parseNum(val)
-  emit('update:modelValue', { ...props.modelValue, price: isNaN(num) ? 0 : num })
-}
-
-function onDistShopInput(e: Event) {
-  const val = (e.target as HTMLInputElement).value
-  const num = parseNum(val)
-  emit('update:modelValue', { ...props.modelValue, distToShop: isNaN(num) ? 0 : num })
-}
-
-function onDistCustomerInput(e: Event) {
-  const val = (e.target as HTMLInputElement).value
-  const num = parseNum(val)
-  emit('update:modelValue', { ...props.modelValue, distToCustomer: isNaN(num) ? 0 : num })
-}
 </script>
